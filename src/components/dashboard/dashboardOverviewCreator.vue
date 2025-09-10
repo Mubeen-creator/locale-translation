@@ -54,6 +54,13 @@
 <script setup>
 import { useAuthStore } from "@/stores/useAuthStore";
 import { useRouter } from "vue-router";
+import { useI18n } from "vue-i18n";
+import { registerDashboardTranslations } from "@/i18n/sections/dashboard.js";
+
+// Register dashboard section translations - this ensures they're bundled with this component
+const i18nInstance = useI18n();
+registerDashboardTranslations({ global: i18nInstance });
+
 const authStore = useAuthStore();
 const router = useRouter();
 

@@ -1,22 +1,23 @@
-<script>
+<script setup>
 import heavy from "@/assets/heavy.jpg";
+import { useI18n } from "vue-i18n";
+import { registerProfileTranslations } from "@/i18n/sections/profile.js";
 
-export default {
-  setup() {
-    const assets = {
-      critical: ["/css/profile.css"],
-      high: [],
-      normal: [heavy],
-    };
+// Register profile section translations - this ensures they're bundled with this component
+const i18nInstance = useI18n();
+registerProfileTranslations({ global: i18nInstance });
 
-    return { heavy, assets };
-  },
+const assets = {
+  critical: ["/css/profile.css"],
+  high: [],
+  normal: [heavy],
 };
 </script>
 
 <template>
   <div>
-    <h1>Profile Page</h1>
+    <h1>{{ $t('profile.page.title') }}</h1>
+    <p>{{ $t('profile.page.description') }}</p>
     <img :src="heavy" alt="Heavy Image" />
   </div>
 </template>

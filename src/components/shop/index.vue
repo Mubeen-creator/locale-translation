@@ -1,5 +1,11 @@
 <script setup>
 // Shop component - translations handled by Vue i18n
+import { useI18n } from "vue-i18n";
+import { registerShopTranslations } from "@/i18n/sections/shop.js";
+
+// Register shop section translations - this ensures they're bundled with this component
+const i18nInstance = useI18n();
+registerShopTranslations({ global: i18nInstance });
 </script>
 
 <script>

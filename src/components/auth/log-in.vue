@@ -23,11 +23,19 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed, watch } from "vue";
+import { ref, onMounted, computed, watch, getCurrentInstance } from "vue";
 import { useRouter } from "vue-router";
 import { useAuthStore } from "@/stores/useAuthStore";
 import { authHandler } from "@/services/authHandler";
 import { useI18n } from "vue-i18n";
+import { registerAuthTranslations } from "@/i18n/sections/auth.js";
+
+// Register auth section translations - this ensures they're bundled with this component
+const i18nInstance = useI18n();
+const { t, locale } = i18nInstance;
+
+// Register translations immediately
+registerAuthTranslations({ global: i18nInstance });
 
 const email = ref("");
 const password = ref("");
@@ -35,7 +43,6 @@ const error = ref("");
 const router = useRouter();
 const auth = useAuthStore();
 const isLoading = ref(false);
-const { t, locale } = useI18n();
 
 // Computed properties to force re-render when translations change
 const welcomeText = computed(() => t('auth.login.title'));

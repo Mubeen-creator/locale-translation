@@ -65,29 +65,22 @@ export default defineConfig(({ mode }) => {
                         output: {
                   manualChunks(id) {
                     // Bundle components by section
-                    if (id.includes("/components/auth/")) {
+                    if (id.includes("/components/auth/") || id.includes("/i18n/sections/auth.js")) {
                       return "section-auth";
                     }
-                    if (id.includes("/components/dashboard/")) {
+                    if (id.includes("/components/dashboard/") || id.includes("/i18n/sections/dashboard.js")) {
                       return "section-dashboard";
                     }
-                    if (id.includes("/components/profile/")) {
+                    if (id.includes("/components/profile/") || id.includes("/i18n/sections/profile.js")) {
                       return "section-profile";
                     }
-                    if (id.includes("/components/discover/")) {
+                    if (id.includes("/components/discover/") || id.includes("/i18n/sections/discover.js")) {
                       return "section-discover";
                     }
-                    if (id.includes("/components/shop/")) {
+                    if (id.includes("/components/shop/") || id.includes("/i18n/sections/shop.js")) {
                       return "section-shop";
                     }
                     if (id.includes("/components/NotFound.vue")) return "section-misc";
-
-                    // Bundle i18n core (without locales) - much smaller now
-                    if (id.includes("/i18n/index.js") || id.includes("/i18n/lazyLoader.js")) {
-                      return "i18n-core";
-                    }
-
-                    // Force separate bundles for locale modules
                     if (id.includes("/i18n/locales/en.js")) {
                       return "locale-en";
                     }

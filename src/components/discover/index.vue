@@ -1,5 +1,11 @@
 <script setup>
 // Discover component - translations handled by Vue i18n
+import { useI18n } from "vue-i18n";
+import { registerDiscoverTranslations } from "@/i18n/sections/discover.js";
+
+// Register discover section translations - this ensures they're bundled with this component
+const i18nInstance = useI18n();
+registerDiscoverTranslations({ global: i18nInstance });
 </script>
 
 <script>
