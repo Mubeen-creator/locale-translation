@@ -1,0 +1,2 @@
+import{_ as t}from"./section-dashboard-BAPk5IQK.js";import{c as n,a as e,o as r}from"./section-auth-CCxP2kJd.js";import"./translation-utils-CTcW_DGr.js";const _={critical:[],high:[],normal:[]},s={};function a(c,o,l,p,u,i){return r(),n("main",null,[...o[0]||(o[0]=[e("h1",null,"404 — Not Found",-1),e("p",null,"The page you requested cannot be found.",-1)])])}const $=t(s,[["render",a]]);export{_ as assets,$ as default};
+//# sourceMappingURL=section-misc-BBIcVwRd.js.map
