@@ -5,7 +5,7 @@ import { registerDiscoverTranslations } from "@/i18n/sections/discover.js";
 
 // Register discover section translations - this ensures they're bundled with this component
 const i18nInstance = useI18n();
-registerDiscoverTranslations({ global: i18nInstance });
+registerDiscoverTranslations(i18nInstance);
 </script>
 
 <script>

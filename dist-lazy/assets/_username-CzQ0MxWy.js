@@ -1,2 +1,0 @@
-import{_ as r}from"./section-dashboard-C2kUarfu.js";import{c as o,a as t,t as a,o as s}from"./section-auth-CnTxakFq.js";import"./translation-utils-KDPW9T7Q.js";import"./locale-en-BuX2Q2_A.js";import"./locale-vi-Bg0idzRT.js";const n={};function c(e,m){return s(),o("div",null,[t("h1",null,"Profile: @"+a(e.$route.params.username),1)])}const u=r(n,[["render",c]]);export{u as default};
-//# sourceMappingURL=_username-CzQ0MxWy.js.map

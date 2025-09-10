@@ -5,7 +5,7 @@ import { registerProfileTranslations } from "@/i18n/sections/profile.js";
 
 // Register profile section translations - this ensures they're bundled with this component
 const i18nInstance = useI18n();
-registerProfileTranslations({ global: i18nInstance });
+registerProfileTranslations(i18nInstance);
 
 const assets = {
   critical: ["/css/profile.css"],

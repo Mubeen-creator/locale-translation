@@ -16,16 +16,18 @@ export const dashboardTranslations = {
 }
 
 // Auto-register translations when this module is imported
-export function registerDashboardTranslations(i18n) {
-  if (i18n && i18n.global) {
+export function registerDashboardTranslations(i18nInstance) {
+  if (i18nInstance && i18nInstance.global) {
     // Merge translations into existing locale messages
     Object.keys(dashboardTranslations).forEach(locale => {
-      const existing = i18n.global.getLocaleMessage(locale) || {}
-      i18n.global.setLocaleMessage(locale, {
+      const existing = i18nInstance.global.getLocaleMessage(locale) || {}
+      i18nInstance.global.setLocaleMessage(locale, {
         ...existing,
         ...dashboardTranslations[locale]
       })
     })
     console.log('[I18N] Dashboard section translations registered')
+  } else {
+    console.warn('[I18N] Invalid i18n instance provided to registerDashboardTranslations')
   }
 }

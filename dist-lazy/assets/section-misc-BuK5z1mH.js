@@ -1,0 +1,2 @@
+import{_ as e}from"./section-dashboard-CHI1Bkox.js";import{c as n,a as t,o as r}from"./section-auth-DbFeGzG6.js";import"./translation-utils-CcXCPGt7.js";import"./locale-en-CGW4a79i.js";const $={critical:[],high:[],normal:[]},s={};function a(c,o,p,l,u,i){return r(),n("main",null,[...o[0]||(o[0]=[t("h1",null,"404 — Not Found",-1),t("p",null,"The page you requested cannot be found.",-1)])])}const h=e(s,[["render",a]]);export{$ as assets,h as default};
+//# sourceMappingURL=section-misc-BuK5z1mH.js.map

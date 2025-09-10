@@ -3,11 +3,21 @@ import { createPinia } from "pinia";
 import piniaPluginPersistedstate from "pinia-plugin-persistedstate";
 import App from "./App.vue";
 import router from "./router";
-import { enterpriseI18n } from "./i18n/enterprise/i18n";
-import { useEnterpriseI18nStore } from "./stores/enterpriseI18n";
+import { createI18n } from "vue-i18n";
 import { useAuthStore } from "@/stores/useAuthStore";
 import { authHandler } from "@/services/authHandler";
 import { useSectionsStore } from "./stores/sectionStore";
+
+// Create simple i18n instance - translations will be loaded by section components
+const i18n = createI18n({
+  legacy: false,
+  locale: 'en',
+  fallbackLocale: 'en',
+  messages: {
+    en: {},
+    vi: {}
+  }
+});
 
 async function initializeApp() {
   const app = createApp(App);
@@ -16,12 +26,11 @@ async function initializeApp() {
   pinia.use(piniaPluginPersistedstate);
   app.use(pinia);
 
-  // Initialize enterprise i18n system
-  await enterpriseI18n.initialize();
+  // Use simple i18n - no separate translation loading
+  console.log('[I18N] Using bundled translations system');
 
   const auth = useAuthStore();
   const sectionsStore = useSectionsStore();
-  const i18nStore = useEnterpriseI18nStore();
 
   auth.refreshFromStorage();
   sectionsStore.hydrate();
@@ -63,7 +72,7 @@ async function initializeApp() {
   });
 
   app.use(router);
-  app.use(enterpriseI18n.vueI18nInstance);
+  app.use(i18n);
   app.mount("#app");
 }
 

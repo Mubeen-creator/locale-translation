@@ -59,7 +59,7 @@ import { registerDashboardTranslations } from "@/i18n/sections/dashboard.js";
 
 // Register dashboard section translations - this ensures they're bundled with this component
 const i18nInstance = useI18n();
-registerDashboardTranslations({ global: i18nInstance });
+registerDashboardTranslations(i18nInstance);
 
 const authStore = useAuthStore();
 const router = useRouter();

@@ -5,7 +5,7 @@ import { registerShopTranslations } from "@/i18n/sections/shop.js";
 
 // Register shop section translations - this ensures they're bundled with this component
 const i18nInstance = useI18n();
-registerShopTranslations({ global: i18nInstance });
+registerShopTranslations(i18nInstance);
 </script>
 
 <script>

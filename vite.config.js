@@ -84,18 +84,7 @@ export default defineConfig(({ mode }) => {
                     if (id.includes("/i18n/locales/en.js")) {
                       return "locale-en";
                     }
-                    if (id.includes("/i18n/locales/vi.js")) {
-                      return "locale-vi";
-                    }
                     
-                    // Force separate bundles for locale JSON data
-                    if (id.includes("/i18n/locales/en.json")) {
-                      return "locale-en-data";
-                    }
-                    if (id.includes("/i18n/locales/vi.json")) {
-                      return "locale-vi-data";
-                    }
-
                     // Bundle translation utils
                     if (id.includes("/utils/translationUtils.js")) return "translation-utils";
                   },

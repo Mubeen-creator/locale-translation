@@ -16,12 +16,11 @@ export const profileTranslations = {
 }
 
 // Auto-register translations when this module is imported
-export function registerProfileTranslations(i18n) {
-  if (i18n && i18n.global) {
-    // Merge translations into existing locale messages
+export function registerProfileTranslations(i18nInstance) {
+  if (i18nInstance && i18nInstance.global) {
     Object.keys(profileTranslations).forEach(locale => {
-      const existing = i18n.global.getLocaleMessage(locale) || {}
-      i18n.global.setLocaleMessage(locale, {
+      const existing = i18nInstance.global.getLocaleMessage(locale) || {}
+      i18nInstance.global.setLocaleMessage(locale, {
         ...existing,
         ...profileTranslations[locale]
       })
