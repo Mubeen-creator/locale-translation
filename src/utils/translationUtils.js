@@ -1,6 +1,8 @@
 // Translation utilities for dynamic content translation
+// NOTE: This file is now deprecated as translations are bundled with sections
+// Keeping minimal utilities for legacy compatibility
 import { ref, onMounted } from 'vue'
-import { enterpriseI18n } from '@/i18n/enterprise/i18n'
+import { useI18n } from 'vue-i18n'
 
 // Cache for translations to avoid repeated requests
 const translationCache = new Map()
@@ -61,18 +63,16 @@ export async function fetchDynamicTranslation(key, locale = 'en') {
   logger.debug(`fetchDynamicTranslation: Fetching translation for key '${key}' in locale '${locale}'`)
   
   try {
-    // Load translations using lazy loader
-    const translations = await enterpriseI18n.loadingStrategy.load(locale)
+    // NOTE: Using Vue i18n instead of enterprise i18n system
+    // This is a fallback utility - sections now bundle their own translations
+    const { t } = useI18n()
+    const translation = t(key, key)
     
-    if (translations) {
-      const translation = getNestedTranslation(translations, key)
-
-      if (translation && translation !== key) {
-        // Cache the result
-        translationCache.set(cacheKey, translation)
-        logger.debug(`fetchDynamicTranslation: Found translation '${translation}' for key '${key}'`)
-        return translation
-      }
+    if (translation && translation !== key) {
+      // Cache the result
+      translationCache.set(cacheKey, translation)
+      logger.debug(`fetchDynamicTranslation: Found translation '${translation}' for key '${key}'`)
+      return translation
     }
 
     // Fallback to key itself

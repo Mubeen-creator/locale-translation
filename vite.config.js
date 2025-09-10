@@ -81,9 +81,6 @@ export default defineConfig(({ mode }) => {
                       return "section-shop";
                     }
                     if (id.includes("/components/NotFound.vue")) return "section-misc";
-                    if (id.includes("/i18n/locales/en.js")) {
-                      return "locale-en";
-                    }
                     
                     // Bundle translation utils
                     if (id.includes("/utils/translationUtils.js")) return "translation-utils";

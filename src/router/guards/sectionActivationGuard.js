@@ -3,7 +3,6 @@ import { lazy } from "@/utils/lazy";
 import { preloadAsset, preloadAssets } from "@/utils/sectionActivator";
 import { useAuthStore } from "@/stores/useAuthStore";
 import { useSectionsStore } from "@/stores/sectionStore";
-import { enterpriseI18n } from "@/i18n/enterprise/i18n";
 import routesJson from "@/router/routeConfig.json";
 
 function toFriendlyName(key) {
