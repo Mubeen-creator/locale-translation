@@ -1,8 +1,10 @@
 {
-    "auth": "/assets/section-auth-CCxP2kJd.js",
+    "route-auth-login": "/assets/route-auth-login-BCIYBGhu.js",
+    "route-auth-signup": "/assets/route-auth-signup-CTi2Qb93.js",
+    "auth": "/assets/section-auth-FEHvLrIL.js",
     "dashboard": "/assets/section-dashboard-CePaFXMC.js",
-    "discover": "/assets/section-discover-HLn786zO.js",
-    "misc": "/assets/section-misc-C-d7Gs7q.js",
+    "discover": "/assets/section-discover-DMBP-QMR.js",
+    "misc": "/assets/section-misc-DHCDPJeV.js",
     "profile": "/assets/section-profile-aPJNzJui.js",
     "shop": "/assets/section-shop-yR9g0lVP.js"
 }

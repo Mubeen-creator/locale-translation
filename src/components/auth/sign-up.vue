@@ -28,7 +28,7 @@ import { useRouter } from "vue-router";
 import { useAuthStore } from "@/stores/useAuthStore";
 import { authHandler } from "@/services/authHandler";
 import { useI18n } from "vue-i18n";
-import { registerAuthTranslations } from "@/i18n/sections/auth.js";
+import { registerSignupTranslations } from "@/i18n/routes/auth-signup.js";
 
 const name = ref("");
 const email = ref("");
@@ -37,12 +37,12 @@ const role = ref("creator");
 const error = ref("");
 const router = useRouter();
 const authStore = useAuthStore();
-// Register auth section translations - this ensures they're bundled with this component
+// Register signup route translations - this ensures they're bundled with this component ONLY
 const i18nInstance = useI18n();
 const { t, locale } = i18nInstance;
 
 // Register translations with the i18n instance
-registerAuthTranslations(i18nInstance.global || i18nInstance);
+registerSignupTranslations(i18nInstance.global || i18nInstance);
 
 // Computed properties to force re-render when translations change
 const registerTitle = computed(() => t('auth.register.title'));

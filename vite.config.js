@@ -24,6 +24,10 @@ async function generateManifest() {
   const files = await fs.readdir(outputDir);
   files.forEach((file) => {
     if (!file.endsWith(".js")) return;
+    // Route-specific bundles for individual components
+    if (file.startsWith("route-auth-login")) bundles["route-auth-login"] = `/assets/${file}`;
+    if (file.startsWith("route-auth-signup")) bundles["route-auth-signup"] = `/assets/${file}`;
+    // Section bundles for remaining components
     if (file.startsWith("section-auth")) bundles["auth"] = `/assets/${file}`;
     if (file.startsWith("section-dashboard"))
       bundles["dashboard"] = `/assets/${file}`;
@@ -64,12 +68,15 @@ export default defineConfig(({ mode }) => {
       rollupOptions: {
                         output: {
                   manualChunks(id) {
-                    // Exclude LocaleSwitcher from section chunks - it's a global component
-                    if (id.includes('/components/LocaleSwitcher.vue')) {
-                      return 'vendor';
+                    // Bundle route-specific translations with individual components
+                    if (id.includes("/components/auth/log-in.vue") || id.includes("/i18n/routes/auth-login.js")) {
+                      return "route-auth-login";
+                    }
+                    if (id.includes("/components/auth/sign-up.vue") || id.includes("/i18n/routes/auth-signup.js")) {
+                      return "route-auth-signup";
                     }
                     
-                    // Bundle components by section
+                    // Bundle remaining auth components together (confirm-email, etc.)
                     if (id.includes("/components/auth/") || id.includes("/i18n/sections/auth.js")) {
                       return "section-auth";
                     }
