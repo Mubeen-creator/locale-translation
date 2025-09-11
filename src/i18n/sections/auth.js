@@ -137,17 +137,31 @@ export const authTranslations = {
 
 // Auto-register translations when this module is imported
 export function registerAuthTranslations(i18nInstance) {
-  if (i18nInstance && i18nInstance.global) {
+  // Handle both global instance and composable instance
+  const globalInstance = i18nInstance.global || i18nInstance
+  
+  if (globalInstance && globalInstance.setLocaleMessage) {
     // Merge translations into existing locale messages
     Object.keys(authTranslations).forEach(locale => {
-      const existing = i18nInstance.global.getLocaleMessage(locale) || {}
-      i18nInstance.global.setLocaleMessage(locale, {
+      const existing = globalInstance.getLocaleMessage(locale) || {}
+      const newMessages = {
         ...existing,
         ...authTranslations[locale]
-      })
+      }
+      globalInstance.setLocaleMessage(locale, newMessages)
+      console.log(`[I18N] Registered auth translations for '${locale}':`, Object.keys(authTranslations[locale]))
     })
     console.log('[I18N] Auth section translations registered')
+    console.log('[I18N] Available locales:', globalInstance.availableLocales)
+    console.log('[I18N] Current locale:', globalInstance.locale?.value || globalInstance.locale)
+    
+    // Test a translation
+    setTimeout(() => {
+      const testKey = 'auth.login.title'
+      const translated = globalInstance.t ? globalInstance.t(testKey) : 'No t function'
+      console.log(`[I18N] Test translation '${testKey}':`, translated)
+    }, 100)
   } else {
-    console.warn('[I18N] Invalid i18n instance provided to registerAuthTranslations')
+    console.warn('[I18N] Invalid i18n instance provided to registerAuthTranslations', i18nInstance)
   }
 }

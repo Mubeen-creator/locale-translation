@@ -34,8 +34,8 @@ import { registerAuthTranslations } from "@/i18n/sections/auth.js";
 const i18nInstance = useI18n();
 const { t, locale } = i18nInstance;
 
-// Register translations with the i18n instance
-registerAuthTranslations(i18nInstance);
+// Register translations with the i18n instance - pass the correct global instance
+registerAuthTranslations(i18nInstance.global || i18nInstance);
 
 const email = ref("");
 const password = ref("");

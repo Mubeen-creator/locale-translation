@@ -103,17 +103,20 @@ export const dashboardTranslations = {
 
 // Auto-register translations when this module is imported
 export function registerDashboardTranslations(i18nInstance) {
-  if (i18nInstance && i18nInstance.global) {
+  // Handle both global instance and composable instance
+  const globalInstance = i18nInstance.global || i18nInstance
+  
+  if (globalInstance && globalInstance.setLocaleMessage) {
     // Merge translations into existing locale messages
     Object.keys(dashboardTranslations).forEach(locale => {
-      const existing = i18nInstance.global.getLocaleMessage(locale) || {}
-      i18nInstance.global.setLocaleMessage(locale, {
+      const existing = globalInstance.getLocaleMessage(locale) || {}
+      globalInstance.setLocaleMessage(locale, {
         ...existing,
         ...dashboardTranslations[locale]
       })
     })
     console.log('[I18N] Dashboard section translations registered')
   } else {
-    console.warn('[I18N] Invalid i18n instance provided to registerDashboardTranslations')
+    console.warn('[I18N] Invalid i18n instance provided to registerDashboardTranslations', i18nInstance)
   }
 }

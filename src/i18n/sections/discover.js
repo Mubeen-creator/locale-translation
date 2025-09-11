@@ -67,14 +67,19 @@ export const discoverTranslations = {
 
 // Auto-register translations when this module is imported
 export function registerDiscoverTranslations(i18nInstance) {
-  if (i18nInstance && i18nInstance.global) {
+  // Handle both global instance and composable instance
+  const globalInstance = i18nInstance.global || i18nInstance
+  
+  if (globalInstance && globalInstance.setLocaleMessage) {
     Object.keys(discoverTranslations).forEach(locale => {
-      const existing = i18nInstance.global.getLocaleMessage(locale) || {}
-      i18nInstance.global.setLocaleMessage(locale, {
+      const existing = globalInstance.getLocaleMessage(locale) || {}
+      globalInstance.setLocaleMessage(locale, {
         ...existing,
         ...discoverTranslations[locale]
       })
     })
     console.log('[I18N] Discover section translations registered')
+  } else {
+    console.warn('[I18N] Invalid i18n instance provided to registerDiscoverTranslations', i18nInstance)
   }
 }

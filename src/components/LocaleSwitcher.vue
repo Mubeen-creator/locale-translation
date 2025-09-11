@@ -4,7 +4,6 @@
       <button 
         @click="toggleDropdown" 
         class="locale-button"
-        :disabled="i18nStore.isLoading"
       >
         <span class="locale-flag">{{ currentLocaleInfo?.flag }}</span>
         <span class="locale-name">{{ currentLocaleInfo?.name }}</span>
@@ -13,11 +12,11 @@
 
       <div v-if="isDropdownOpen" class="locale-dropdown-menu">
         <button
-          v-for="locale in i18nStore.supportedLocales"
+          v-for="locale in supportedLocales"
           :key="locale.code"
           @click="switchLocale(locale.code)"
           class="locale-option"
-          :class="{ 'active': locale.code === i18nStore.currentLocale }"
+          :class="{ 'active': locale.code === currentLocale }"
         >
           <span class="locale-flag">{{ locale.flag }}</span>
           <span class="locale-name">{{ locale.name }}</span>
@@ -25,38 +24,67 @@
         </button>
       </div>
     </div>
-
-    <!-- Loading indicator -->
-    <div v-if="i18nStore.isLoading" class="locale-loading">
-      <span class="loading-spinner"></span>
-      <span class="loading-text">{{ $t('common.loading') }}</span>
-    </div>
   </div>
 </template>
 
 <script setup>
 import { ref, computed, onMounted, onUnmounted } from 'vue'
-import { useEnterpriseI18nStore } from '@/stores/enterpriseI18n'
+import { useI18n } from 'vue-i18n'
 
-const i18nStore = useEnterpriseI18nStore()
+const { locale } = useI18n()
 const isDropdownOpen = ref(false)
 
+// Supported locales
+const supportedLocales = [
+  { code: 'en', name: 'English', nativeName: 'English', flag: '🇺🇸' },
+  { code: 'vi', name: 'Vietnamese', nativeName: 'Tiếng Việt', flag: '🇻🇳' }
+]
+
 // Computed properties
-const currentLocaleInfo = computed(() => i18nStore.currentLocaleInfo)
+const currentLocale = computed(() => locale.value)
+const currentLocaleInfo = computed(() => 
+  supportedLocales.find(l => l.code === locale.value)
+)
 
 // Methods
 const toggleDropdown = () => {
   isDropdownOpen.value = !isDropdownOpen.value
 }
 
-const switchLocale = async (localeCode) => {
+const switchLocale = (localeCode) => {
   try {
-    await i18nStore.setLocale(localeCode)
+    console.log(`[LocaleSwitcher] Switching locale from ${locale.value} to ${localeCode}`)
+    
+    // Update Vue i18n locale
+    locale.value = localeCode
+    
+    // Save to localStorage
+    localStorage.setItem('preferred-locale', localeCode)
+    
+    // Close dropdown
     isDropdownOpen.value = false
+    
+    console.log(`[LocaleSwitcher] ✅ Locale switched to: ${localeCode}`)
   } catch (error) {
-    console.error('Failed to switch locale:', error)
+    console.error('[LocaleSwitcher] Failed to switch locale:', error)
   }
 }
+
+// Initialize locale from localStorage
+onMounted(() => {
+  const savedLocale = localStorage.getItem('preferred-locale')
+  if (savedLocale && supportedLocales.some(l => l.code === savedLocale)) {
+    console.log(`[LocaleSwitcher] Restoring saved locale: ${savedLocale}`)
+    locale.value = savedLocale
+  }
+  
+  // Close dropdown when clicking outside
+  document.addEventListener('click', handleClickOutside)
+})
+
+onUnmounted(() => {
+  document.removeEventListener('click', handleClickOutside)
+})
 
 // Close dropdown when clicking outside
 const handleClickOutside = (event) => {
@@ -64,15 +92,6 @@ const handleClickOutside = (event) => {
     isDropdownOpen.value = false
   }
 }
-
-// Lifecycle
-onMounted(() => {
-  document.addEventListener('click', handleClickOutside)
-})
-
-onUnmounted(() => {
-  document.removeEventListener('click', handleClickOutside)
-})
 </script>
 
 <style scoped>

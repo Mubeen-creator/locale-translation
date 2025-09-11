@@ -8,16 +8,22 @@ import { useAuthStore } from "@/stores/useAuthStore";
 import { authHandler } from "@/services/authHandler";
 import { useSectionsStore } from "./stores/sectionStore";
 
-// Create simple i18n instance - translations will be loaded by section components
+// Create simple i18n instance with Vietnamese as default
 const i18n = createI18n({
   legacy: false,
-  locale: 'en',
+  locale: 'vi', // Set Vietnamese as default
   fallbackLocale: 'en',
   messages: {
     en: {},
     vi: {}
   }
 });
+
+// Make i18n globally accessible for locale switching
+window.globalI18n = i18n;
+
+console.log('[I18N] Created i18n instance with locale:', i18n.global.locale.value);
+console.log('[I18N] Available locales:', i18n.global.availableLocales);
 
 async function initializeApp() {
   const app = createApp(App);
@@ -73,6 +79,10 @@ async function initializeApp() {
 
   app.use(router);
   app.use(i18n);
+  
+  // Make i18n available globally for debugging
+  app.config.globalProperties.$i18n = i18n;
+  
   app.mount("#app");
 }
 

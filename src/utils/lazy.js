@@ -1,4 +1,4 @@
-const modules = import.meta.glob("/src/components/**/*.vue");
+const modules = import.meta.glob("/src/components/**/*.vue", { eager: false });
 
 export function lazy(path) {
   if (!path || typeof path !== "string") {

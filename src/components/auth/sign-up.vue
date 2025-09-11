@@ -27,8 +27,8 @@ import { ref, onMounted, computed } from "vue";
 import { useRouter } from "vue-router";
 import { useAuthStore } from "@/stores/useAuthStore";
 import { authHandler } from "@/services/authHandler";
-import { enterpriseI18n } from "@/i18n/enterprise/i18n";
 import { useI18n } from "vue-i18n";
+import { registerAuthTranslations } from "@/i18n/sections/auth.js";
 
 const name = ref("");
 const email = ref("");
@@ -37,7 +37,12 @@ const role = ref("creator");
 const error = ref("");
 const router = useRouter();
 const authStore = useAuthStore();
-const { locale, t } = useI18n();
+// Register auth section translations - this ensures they're bundled with this component
+const i18nInstance = useI18n();
+const { t, locale } = i18nInstance;
+
+// Register translations with the i18n instance
+registerAuthTranslations(i18nInstance.global || i18nInstance);
 
 // Computed properties to force re-render when translations change
 const registerTitle = computed(() => t('auth.register.title'));
@@ -49,14 +54,9 @@ const userRole = computed(() => t('auth.common.user'));
 const adminRole = computed(() => t('auth.common.admin'));
 const guestRole = computed(() => t('auth.common.guest'));
 
-// Preload auth section translations
-onMounted(async () => {
-  try {
-    await enterpriseI18n.preloadLocale(locale.value);
-    console.log(`[SIGNUP] Preloaded auth section for locale '${locale.value}'`);
-  } catch (error) {
-    console.error(`[SIGNUP] Failed to preload auth section:`, error);
-  }
+onMounted(() => {
+  console.log(`[SIGNUP] Component mounted, current locale: ${locale.value}`);
+  console.log(`[SIGNUP] Register title: ${t('auth.register.title')}`);
 });
 
 async function handleSignUp() {
