@@ -64,6 +64,11 @@ export default defineConfig(({ mode }) => {
       rollupOptions: {
                         output: {
                   manualChunks(id) {
+                    // Exclude LocaleSwitcher from section chunks - it's a global component
+                    if (id.includes('/components/LocaleSwitcher.vue')) {
+                      return 'vendor';
+                    }
+                    
                     // Bundle components by section
                     if (id.includes("/components/auth/") || id.includes("/i18n/sections/auth.js")) {
                       return "section-auth";
